@@ -10,6 +10,7 @@ export default function Home() {
           (middleware.ts)
         </div>
         <div>3. 完善 demo1/page.tsx</div>
+        <div>4. 完善 demo2/page.tsx</div>
       </main>
     </div>
   );
