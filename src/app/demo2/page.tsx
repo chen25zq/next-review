@@ -120,7 +120,7 @@ function Demo2() {
         4.
         每个计时器的操作（添加、删除、启动、暂停等）通过Context提供的方法来实现。
       </p>
-      <p>5. 计时器状态保存在localStorage中，页面刷新后能够恢复。（加分项）</p>
+      <p>5. 计时器状态保存在localStorage中，页面刷新后能够恢复。（拓展）</p>
       <h1>Multi Timer with Context</h1>
       <TimerControls />
       <TimerList />
