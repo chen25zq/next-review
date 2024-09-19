@@ -26,7 +26,7 @@ export default function Demo1Page() {
       <div className="h-[120px] w-[400px] border-[5px] border-[#F0F0F0] flex flex-row justify-around items-center">
         <div className="h-full py-[6px] justify-start">
           <h6 className="font-semibold">按学校分类</h6>
-          {/* 示例： 学校名称 */}
+          {/* 示例： 点击ALL 显示所有的，点击SJSU / KCC 只显示SJSU / KCC的数据 */}
           <p onClick={() => {}}>ALL</p>
           <p onClick={() => {}}>示例: SJSU</p>
         </div>
