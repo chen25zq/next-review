@@ -5,3 +5,5 @@
 ## 2. 设置路由守卫，不管从哪个页面进入网页都跳转到 demo1 页 (通过 middleware 或其他方式)
 
 ## 3. 完善 demo1/page.tsx
+
+## 4. 完善 demo2/page.tsx
