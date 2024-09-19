@@ -110,7 +110,7 @@ function TimerList() {
 
 function Demo2() {
   return (
-    <>
+    <TimerProvider>
       <p>1. 使用Context 来管理多个计时器的状态和操作。</p>
       <p>
         2. 允许动态添加、删除计时器，每个计时器都有独立的开始/暂停、重置功能。
@@ -124,7 +124,7 @@ function Demo2() {
       <h1>Multi Timer with Context</h1>
       <TimerControls />
       <TimerList />
-    </>
+    </TimerProvider>
   );
 }
 
