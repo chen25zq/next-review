@@ -44,8 +44,6 @@ function useTimers() {
 }
 
 function TimerControls() {
-  const { dispatch } = useTimers();
-
   return (
     <div>
       <button
@@ -61,7 +59,7 @@ function TimerControls() {
 }
 
 function TimerList() {
-  const { timers, dispatch } = useTimers();
+  const { timers } = useTimers();
 
   return (
     <div>
