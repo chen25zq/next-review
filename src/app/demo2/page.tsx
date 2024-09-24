@@ -8,17 +8,39 @@ function timerReducer(
   state: unknown[],
   action: { type: unknown; payload: unknown }
 ) {
+  console.log(action, 'typeß');
+  const { payload } = action;
   switch (action.type) {
     case "ADD_TIMER":
       return [...state, { id: Date.now(), time: 0, isActive: false }];
     case "REMOVE_TIMER":
-    // Remove the timer with the given id
+      // Remove the timer with the given id
+      const remoteTimer = state.filter(item => item.id !== payload.id);
+      return [...remoteTimer];
     case "TOGGLE_TIMER":
-    // Toggle the timer with the given id
+      // Toggle the timer with the given id
+      const idx = state.findIndex(item => item.id === payload.id);
+      const toggleTimer = state.filter(item => item.id === payload.id)[0];
+      toggleTimer.isActive = !toggleTimer.isActive;
+      if (toggleTimer.isActive) {
+        // 继续走定时器
+      } else {
+        // 重置
+        toggleTimer.time = 0
+      }
+      state[idx] = toggleTimer
+      return [...state];
     case "RESET_TIMER":
     // Reset the timer with the given id
+      const idex = state.findIndex(item => item.id === payload.id);
+      const resetTimer = state.filter(item => item.id === payload.id)[0];
+      resetTimer.time = 0;
+      state[idex] = resetTimer;
+      return [...state];
     case "TICK":
-    // Tick all active timers
+      // Tick all active timers
+      const list = state.filter(item => item.isActive);
+      return [...list];
     case "LOAD_TIMERS":
     // Load timers
     default:
@@ -30,7 +52,11 @@ function TimerProvider({ children }: { children: React.ReactNode }) {
   const [timers, dispatch] = useReducer(timerReducer, []);
 
   // Tick every second
-  useEffect(() => {}, []);
+  useEffect(() => {
+    // setTimeout(() => {
+
+    // }, 1000);
+  }, [timers]);
 
   return (
     <TimerContext.Provider value={{ timers, dispatch }}>
@@ -44,12 +70,17 @@ function useTimers() {
 }
 
 function TimerControls() {
+  const { timers, dispatch } = useTimers();
+
   return (
     <div>
       <button
         className="flex border-[1px] border-gray-500 px-[10px] py-[4px] rounded-[2px]"
         onClick={() => {
           // Add a new timer
+          dispatch({
+            type: 'ADD_TIMER',
+          })
         }}
       >
         Add Timer
@@ -59,8 +90,9 @@ function TimerControls() {
 }
 
 function TimerList() {
-  const { timers } = useTimers();
-
+  const { timers, dispatch } = useTimers();
+  console.log(timers, 'timers');
+  
   return (
     <div>
       {timers &&
@@ -74,6 +106,12 @@ function TimerList() {
               className="border-[1px] border-gray-500 px-[10px] py-[4px] rounded-[2px] mr-[10px]"
               onClick={() => {
                 // Toggle the timer
+                dispatch({
+                  type: 'TOGGLE_TIMER',
+                  payload: {
+                    id: timer.id
+                  }
+                })
               }}
             >
               {timer.isActive ? "Pause" : "Start"}
@@ -82,6 +120,12 @@ function TimerList() {
               className="border-[1px] border-gray-500 px-[10px] py-[4px] rounded-[2px] mr-[10px]"
               onClick={() => {
                 // Reset the timer
+                dispatch({
+                  type: 'RESET_TIMER',
+                  payload: {
+                    id: timer.id
+                  }
+                })
               }}
             >
               Reset
@@ -90,6 +134,12 @@ function TimerList() {
               className="border-[1px] border-gray-500 px-[10px] py-[4px] rounded-[2px] mr-[10px]"
               onClick={() => {
                 // Remove the timer
+                dispatch({
+                  type: 'REMOVE_TIMER',
+                  payload: {
+                    id: timer.id
+                  }
+                })
               }}
             >
               Remove
